@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 // Image de profil par défaut
-$default_profile_picture = "../img/static/img_default.jpg";
+$default_profile_picture = "../img/static/default-profile.jpg";
 $default_bio="ajouter une biographie!";
 
 // Vérification de l'image de profil de l'utilisateur
@@ -23,9 +23,9 @@ $bio = !empty($_SESSION['bio']) ? $_SESSION['bio'] : $default_bio;
     <div class="card mx-auto shadow-lg" style="max-width: 500px;">
         <!-- Ajout de marges et centrer l'image -->
         <div class="text-center p-4">
-            <img src="<?php echo htmlspecialchars($profile_picture); ?>" 
-                 class="rounded-circle border img-fluid" 
-                 alt="Photo de profil" 
+            <img src="<?php echo htmlspecialchars($profile_picture); ?>"
+                 class="rounded-circle border img-fluid"
+                 alt="Photo de profil"
                  style="width: 150px; height: 150px; object-fit: cover;">
         </div>
         <div class="card-body">
@@ -45,9 +45,4 @@ $bio = !empty($_SESSION['bio']) ? $_SESSION['bio'] : $default_bio;
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
-
-
-

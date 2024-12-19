@@ -27,7 +27,7 @@ if (!$user) {
 $username = $user['username'];
 $email = $user['email'];
 $bio = $user['bio'] ?? "Ajouter une biographie !";
-$profile_picture = $user['profile_picture'] ?? "../img/static/img_default.jpg";
+$profile_picture = $user['profile_picture'] ?? "../img/static/default-profile.jpg";
 
 // Traitement du formulaire
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -125,7 +125,7 @@ if (isset($_POST['delete'])) {
                 <!-- Modifier le nom d'utilisateur -->
                 <div class="mb-3">
                     <label for="username" class="form-label">Nom d'utilisateur</label>
-                    <input type="text" class="form-control" id="username" name="username" 
+                    <input type="text" class="form-control" id="username" name="username"
                            value="<?php echo htmlspecialchars($username); ?>" required>
                 </div>
 
