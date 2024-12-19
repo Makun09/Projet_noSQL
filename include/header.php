@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-       
+
         <!-- Logo and Brand -->
         <a class="navbar-brand" href="/home/">
             <img src="/img/static/logo.png" alt="Logo" width="40" class="d-inline-block align-text-center">
@@ -44,12 +44,11 @@
                     <a href="/login/login.php" class="btn btn-outline-light me-2" style="background-color: #6f42c1; color: white; border-color: #6f42c1;">Login</a>
                     <a href="/login/register.php" class="btn btn-success">Register</a>
                 </div>
-                 <!-- Bouton Mode Sombre avec Image -->
-        <button id="theme-toggle" class="btn btn-light me-2 ms-2">
+            <?php } ?>
+             <!-- Bouton Mode Sombre avec Image -->
+            <button id="theme-toggle" class="btn btn-light me-2 ms-2">
             <img src="/img/static/brightness-high.svg" alt="Mode Sombre" width="20" height="20">
         </button>
-
-            <?php } ?>
         </div>
     </div>
 </nav>
