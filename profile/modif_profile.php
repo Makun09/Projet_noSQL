@@ -34,15 +34,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Récupérer les nouvelles données
     $new_username = htmlspecialchars(trim($_POST['username']));
     $new_bio = htmlspecialchars(trim($_POST['bio']));
+    $new_email = htmlspecialchars(trim($_POST['email']));
     $new_profile_picture = $_FILES['profile_picture'];
 
     $update_data = [];
+    $error_message = '';
 
-    // Mise à jour des données si modifiées
+    // Vérification du nom d'utilisateur
     if (!empty($new_username) && $new_username !== $username) {
-        $update_data['username'] = $new_username;
+        // Vérifier si le nom d'utilisateur est déjà pris
+        $username_exists = $collection->findOne(['username' => $new_username]);
+        if ($username_exists) {
+            $error_message = "Le nom d'utilisateur est déjà pris.";
+        } else {
+            $update_data['username'] = $new_username;
+        }
     }
 
+    // Vérification de l'email
+    if (!empty($new_email) && $new_email !== $email) {
+        // Vérifier si l'email est déjà pris
+        $email_exists = $collection->findOne(['email' => $new_email]);
+        if ($email_exists) {
+            $error_message = "L'email est déjà pris par un autre utilisateur.";
+        } else {
+            $update_data['email'] = $new_email;
+        }
+    }
+
+    // Mise à jour des autres données si modifiées
     if (!empty($new_bio) && $new_bio !== $bio) {
         $update_data['bio'] = $new_bio;
     }
@@ -58,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Mise à jour dans la base de données
-    if (!empty($update_data)) {
+    if (empty($error_message) && !empty($update_data)) {
         $collection->updateOne(
             ['_id' => new MongoDB\BSON\ObjectId($user_id)],
             ['$set' => $update_data]
@@ -68,6 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['username'] = $update_data['username'] ?? $username;
         $_SESSION['bio'] = $update_data['bio'] ?? $bio;
         $_SESSION['profile_picture'] = $update_data['profile_picture'] ?? $profile_picture;
+        $_SESSION['email'] = $update_data['email'] ?? $email;
 
         // Redirection vers la page de profil
         header('Location: profile.php');
@@ -92,11 +113,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                            value="<?php echo htmlspecialchars($username); ?>" required>
                 </div>
 
-                <!-- Modifier l'e-mail (lecture seule pour cet exemple) -->
+                <!-- Modifier l'e-mail -->
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" 
-                           value="<?php echo htmlspecialchars($email); ?>" readonly>
+                    <input type="email" class="form-control" id="email" name="email"
+                           value="<?php echo htmlspecialchars($email); ?>" required>
                 </div>
 
                 <!-- Modifier la biographie -->
@@ -111,6 +132,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="file" class="form-control" id="profile_picture" name="profile_picture" accept="image/*">
                     <small class="text-light">Laissez vide pour conserver l'image actuelle.</small>
                 </div>
+
+                <!-- Message d'erreur -->
+                <?php
+                if (!empty($error_message)) {
+                    echo '<div class="alert alert-danger mt-2">' . htmlspecialchars($error_message) . '</div>';
+                }
+                ?>
 
                 <!-- Bouton de validation -->
                 <div class="text-center mt-4">
