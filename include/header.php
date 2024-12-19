@@ -1,5 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
+
         <!-- Logo and Brand -->
         <a class="navbar-brand" href="/home/">
             <img src="/img/static/logo.png" alt="Logo" width="40" class="d-inline-block align-text-center">
@@ -44,6 +45,28 @@
                     <a href="/login/register.php" class="btn btn-success">Register</a>
                 </div>
             <?php } ?>
+             <!-- Bouton Mode Sombre avec Image -->
+            <button id="theme-toggle" class="btn btn-light me-2 ms-2">
+            <img src="/img/static/brightness-high.svg" alt="Mode Sombre" width="20" height="20">
+        </button>
         </div>
     </div>
 </nav>
+
+<script>
+// JavaScript pour gérer la bascule du thème
+document.getElementById('theme-toggle').addEventListener('click', function() {
+    const html = document.documentElement;
+    const currentTheme = html.getAttribute('data-bs-theme');
+    const img = this.querySelector('img');
+    if (currentTheme === 'dark') {
+        html.setAttribute('data-bs-theme', 'light');
+        img.src = '/img/static/moon-stars.svg'; // Image pour le mode clair
+        img.alt = 'Mode Sombre';
+    } else {
+        html.setAttribute('data-bs-theme', 'dark'   );
+        img.src = '/img/static/brightness-high.svg'; // Image pour le mode sombre
+        img.alt = 'Mode Clair';
+    }
+});
+</script>
