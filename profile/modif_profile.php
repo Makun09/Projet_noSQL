@@ -35,6 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $new_username = htmlspecialchars(trim($_POST['username']));
     $new_bio = htmlspecialchars(trim($_POST['bio']));
     $new_email = htmlspecialchars(trim($_POST['email']));
+
+    // Nouveau fichier image
     $new_profile_picture = $_FILES['profile_picture'];
 
     $update_data = [];
@@ -69,11 +71,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Traitement de l'image de profil si fournie
     if ($new_profile_picture && $new_profile_picture['error'] === UPLOAD_ERR_OK) {
+        // Nouveau nom de fichier basé sur l'ID de l'utilisateur
         $upload_dir = $_SERVER['DOCUMENT_ROOT'] . '/img/static/';
-        $upload_file = $upload_dir . basename($new_profile_picture['name']);
+        $new_image_name = $user_id . '.png';  // Utilisation de l'ID de l'utilisateur pour le nom de fichier
+        $upload_file = $upload_dir . $new_image_name;
 
+        // Déplacer le fichier téléchargé dans le répertoire de destination avec le nouveau nom
         if (move_uploaded_file($new_profile_picture['tmp_name'], $upload_file)) {
-            $update_data['profile_picture'] = '/img/static/' . basename($new_profile_picture['name']);
+            $update_data['profile_picture'] = '/img/static/' . $new_image_name;
         }
     }
 
