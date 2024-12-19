@@ -24,12 +24,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Playlists</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Radio</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Premium</a>
-                </li>
+                
             </ul>
 
             <!-- Login/Register buttons -->
