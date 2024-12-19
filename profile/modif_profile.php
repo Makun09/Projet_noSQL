@@ -4,17 +4,30 @@ $title = "Modifier le profil";
 require_once $_SERVER['DOCUMENT_ROOT'] . '/include/head.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/include/header.php';
 
+// Vérification de la session utilisateur
 if (!isset($_SESSION['user_id'])) {
     header('Location: ../home');
     exit();
 }
 
-// Variables de session pour l'utilisateur actuel
+// Connexion à MongoDB
+require_once $_SERVER['DOCUMENT_ROOT'] . '/utils/database.php';
+$db = getDatabaseConnection()->selectDatabase('spotify'); // Remplacez 'spotify' par votre base de données.
+$collection = $db->users; // Collection 'users'
+
+// Récupération des informations utilisateur depuis MongoDB
 $user_id = $_SESSION['user_id'];
-$username = $_SESSION['username'];
-$email = $_SESSION['email'];
-$bio = !empty($_SESSION['bio']) ? $_SESSION['bio'] : "Ajouter une biographie !";
-$profile_picture = !empty($_SESSION['profile_picture']) ? $_SESSION['profile_picture'] : "../img/static/img_default.jpg";
+$user = $collection->findOne(['_id' => new MongoDB\BSON\ObjectId($user_id)]);
+
+if (!$user) {
+    die("Utilisateur introuvable.");
+}
+
+// Variables initiales
+$username = $user['username'];
+$email = $user['email'];
+$bio = $user['bio'] ?? "Ajouter une biographie !";
+$profile_picture = $user['profile_picture'] ?? "../img/static/img_default.jpg";
 
 // Traitement du formulaire
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -23,35 +36,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $new_bio = htmlspecialchars(trim($_POST['bio']));
     $new_profile_picture = $_FILES['profile_picture'];
 
-    // Validation des données (exemple simple)
-    if (!empty($new_username)) {
-        $_SESSION['username'] = $new_username;
+    $update_data = [];
+
+    // Mise à jour des données si modifiées
+    if (!empty($new_username) && $new_username !== $username) {
+        $update_data['username'] = $new_username;
     }
 
-    if (!empty($new_bio)) {
-        $_SESSION['bio'] = $new_bio;
+    if (!empty($new_bio) && $new_bio !== $bio) {
+        $update_data['bio'] = $new_bio;
     }
 
     // Traitement de l'image de profil si fournie
     if ($new_profile_picture && $new_profile_picture['error'] === UPLOAD_ERR_OK) {
-        $upload_dir = $_SERVER['DOCUMENT_ROOT'] . '/img/uploads/';
+        $upload_dir = $_SERVER['DOCUMENT_ROOT'] . '/img/static/';
         $upload_file = $upload_dir . basename($new_profile_picture['name']);
+
         if (move_uploaded_file($new_profile_picture['tmp_name'], $upload_file)) {
-            $_SESSION['profile_picture'] = '/img/uploads/' . basename($new_profile_picture['name']);
+            $update_data['profile_picture'] = '/img/static/' . basename($new_profile_picture['name']);
         }
     }
 
-    // Redirection vers le profil après modification
-    header('Location: profile.php');
-    exit();
+    // Mise à jour dans la base de données
+    if (!empty($update_data)) {
+        $collection->updateOne(
+            ['_id' => new MongoDB\BSON\ObjectId($user_id)],
+            ['$set' => $update_data]
+        );
+
+        // Mettre à jour les variables de session
+        $_SESSION['username'] = $update_data['username'] ?? $username;
+        $_SESSION['bio'] = $update_data['bio'] ?? $bio;
+        $_SESSION['profile_picture'] = $update_data['profile_picture'] ?? $profile_picture;
+
+        // Redirection vers la page de profil
+        header('Location: profile.php');
+        exit();
+    }
 }
 ?>
 
 <body class="bg-dark text-light">
 <div class="container mt-5">
-    <h2 class="text-center mb-4">Modifier le profil</h2>
+    <h2 class="text-center mb-4">Modifier votre profil</h2>
+
+    <!-- Card pour afficher les informations du profil -->
     <div class="card mx-auto shadow-lg bg-secondary text-light" style="max-width: 500px;">
         <div class="card-body">
+            <!-- Formulaire de modification -->
             <form method="POST" enctype="multipart/form-data">
                 <!-- Modifier le nom d'utilisateur -->
                 <div class="mb-3">
@@ -96,4 +128,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
+</html>
