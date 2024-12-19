@@ -30,3 +30,40 @@ function validateMandatoryParams(array $data, array $mandatoryParams): bool {
     }
     return true;
 }
+
+
+function getSongs() {
+    $db = getDatabaseConnection();
+    $songs = $db->spotify->songs;
+    return $songs->find();
+}
+
+function getSongsByString(string $search) {
+    $db = getDatabaseConnection();
+    $songs = $db->spotify->songs;
+    return $songs->find(['$text' => ['$search' => $search]]);
+}
+
+function getPlaylists() {
+    $db = getDatabaseConnection();
+    $playlists = $db->spotify->playlists;
+    return $playlists->find();
+}
+
+function getPlaylistsByString(string $search) {
+    $db = getDatabaseConnection();
+    $playlists = $db->spotify->playlists;
+    return $playlists->find(['$text' => ['$search' => $search]]);
+}
+
+function getArtists() {
+    $db = getDatabaseConnection();
+    $artists = $db->spotify->artists;
+    return $artists->find();
+}
+
+function getArtistsByString(string $search) {
+    $db = getDatabaseConnection();
+    $artists = $db->spotify->artists;
+    return $artists->find(['$text' => ['$search' => $search]]);
+}
