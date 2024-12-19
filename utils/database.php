@@ -17,6 +17,7 @@ users
     username
     email
     password
+    profile_picture
 ----------------
 playlists
     _id
@@ -28,11 +29,27 @@ playlists
 songs
     _id
     image
-    playlist_id
-    name
+    title
     artist
+    filename
     album
+    album_art
     duration
 ----------------
-
+albums
+    _id
+    title
+    artist
+    year
+    album_art
+----------------
+artists
+    _id
+    name
+    image
+    bio
+    ???
+liked
+    _id
+    song_id
 */
