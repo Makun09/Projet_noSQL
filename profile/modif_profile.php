@@ -95,6 +95,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 }
+
+// Suppression du profil
+if (isset($_POST['delete'])) {
+    // Supprimer le profil de la base de données
+    $collection->deleteOne(['_id' => new MongoDB\BSON\ObjectId($user_id)]);
+
+    // Détruire la session et rediriger
+    session_destroy();
+    header('Location: ../home');
+    exit();
+}
 ?>
 
 <body class="bg-dark text-light">
@@ -151,6 +162,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Bouton retour -->
     <div class="text-center mt-4">
         <a href="profile.php" class="btn btn-outline-light">Retour au profil</a>
+    </div>
+
+    <!-- Bouton de suppression du profil -->
+    <div class="text-center mt-4">
+        <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Supprimer mon profil</button>
+    </div>
+</div>
+
+<!-- Modal de confirmation de suppression -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Êtes-vous sûr ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Vous êtes sur le point de supprimer votre profil. Cette action est irréversible.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <form method="POST">
+                    <button type="submit" name="delete" class="btn btn-danger">Supprimer le profil</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 
