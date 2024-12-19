@@ -35,12 +35,12 @@
             <?php
             if (isset($_SESSION['username'])) { ?>
                 <div class="d-flex">
-                    <a href="/profile/" class="btn btn-success me-2">Profile</a>
+                    <a href="/profile/profile.php" class="btn btn-success me-2" style="background-color: #6f42c1; color: white; border-color: #6f42c1;">Profile</a>
                     <a href="/login/logout.php" class="btn btn-outline-light">Logout</a>
                 </div>
             <?php } else { ?>
                 <div class="d-flex">
-                    <a href="/login/login.php" class="btn btn-outline-light me-2">Login</a>
+                    <a href="/login/login.php" class="btn btn-outline-light me-2" style="background-color: #6f42c1; color: white; border-color: #6f42c1;">Login</a>
                     <a href="/login/register.php" class="btn btn-success">Register</a>
                 </div>
             <?php } ?>
