@@ -1,52 +1,63 @@
 <?php
 
-// Fonction pour afficher les musiques
-function displaySongs($songs) {
-    echo '<div class="container mt-4"><h2>Musiques</h2><div class="row">';
-    foreach ($songs as $song) {
-        echo '<div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="' . ($song['image'] ?? 'path/to/default.jpg') . '" class="card-img-top" alt="' . $song['title'] . '">
-                <div class="card-body">
-                    <h5 class="card-title">' . $song['title'] . '</h5>
-                    <p class="card-text">' . $song['artist'] . '</p>
-                </div>
+// Fonction pour afficher une musique
+function displaySong($song)
+{ ?>
+    <div class="position-relative flex-shrink-0 mb-3" style="width: 11rem; min-width: 11rem;">
+        <a class="card text-start text-decoration-none p-2" href="" style="border: none; transition: background-color 0.3s ease;"
+            onmouseover="this.classList.add('bg-body-tertiary');
+                         this.nextElementSibling.style.opacity='1';"
+            onmouseout="this.classList.remove('bg-body-tertiary');
+                        this.nextElementSibling.style.opacity='0';">
+            <img src="https://picsum.photos/256" class="card-img-top rounded" alt="Album Art">
+            <div class="card-body pt-1">
+                <h5 class="card-title" style="font-weight: bold;"><?php echo $song['title']; ?></h5>
+                <p class="card-text text-muted"><?php echo $song['artist']; ?></p>
             </div>
-        </div>';
-    }
-    echo '</div></div>';
-}
+        </a>
+        <button class="btn btn-primary btn-sm position-absolute rounded-circle"
+            style="opacity: 0; right: 10px; top: 10px; transition: opacity 0.6s ease;"
+            onclick="addToPlaylist(<?php echo $song['_id']; ?>)">
+            <i class="bi bi-plus-lg"></i>
+        </button>
+    </div>
 
-// Fonction pour afficher les playlists
-function displayPlaylists($playlists) {
-    echo '<div class="container mt-4"><h2>Playlists</h2><div class="row">';
-    foreach ($playlists as $playlist) {
-        echo '<div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="' . ($playlist['cover'] ?? 'path/to/default.jpg') . '" class="card-img-top" alt="' . $playlist['name'] . '">
-                <div class="card-body">
-                    <h5 class="card-title">' . $playlist['name'] . '</h5>
-                    <p class="card-text">' . $playlist['description'] . '</p>
-                </div>
-            </div>
-        </div>';
-    }
-    echo '</div></div>';
-}
+<?php }
 
-// Fonction pour afficher les artistes
-function displayArtists($artists) {
-    echo '<div class="container mt-4"><h2>Artistes</h2><div class="row">';
-    foreach ($artists as $artist) {
-        echo '<div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="' . ($artist['photo'] ?? 'path/to/default.jpg') . '" class="card-img-top" alt="' . $artist['name'] . '">
-                <div class="card-body">
-                    <h5 class="card-title">' . $artist['name'] . '</h5>
-                    <p class="card-text">' . $artist['genre'] . '</p>
-                </div>
+// Fonction pour afficher une playlist
+function displayPlaylist($playlist)
+{ ?>
+    <div class="position-relative flex-shrink-0 mb-3" style="width: 11rem; min-width: 11rem;">
+        <a class="card text-start text-decoration-none p-2" href="" style="border: none; transition: background-color 0.3s ease;"
+            onmouseover="this.classList.add('bg-body-tertiary');
+                         this.nextElementSibling.style.opacity='1';"
+            onmouseout="this.classList.remove('bg-body-tertiary');
+                        this.nextElementSibling.style.opacity='0';">
+            <img src="https://picsum.photos/256" class="card-img-top rounded" alt="Album Art">
+            <div class="card-body pt-1">
+                <h5 class="card-title" style="font-weight: bold;">Playlist Title</h5>
+                <p class="card-text text-muted">Artist Name</p>
             </div>
-        </div>';
-    }
-    echo '</div></div>';
-}
+        </a>
+    </div>
+
+
+<?php }
+
+// Fonction pour afficher un artiste
+function displayArtist($artist)
+{ ?>
+    <div class="position-relative flex-shrink-0 mb-3" style="width: 11rem; min-width: 11rem;">
+        <a class="card text-start text-decoration-none p-2" href="" style="border: none; transition: background-color 0.3s ease;"
+            onmouseover="this.classList.add('bg-body-tertiary');
+                         this.nextElementSibling.style.opacity='1';"
+            onmouseout="this.classList.remove('bg-body-tertiary');
+                        this.nextElementSibling.style.opacity='0';">
+            <img src="https://picsum.photos/256" class="card-img-top rounded-circle" alt="Album Art">
+            <div class="card-body pt-3">
+                <h5 class="card-title" style="font-weight: bold;">Artist Name</h5>
+                <p class="card-text text-muted">Artiste</p>
+            </div>
+        </a>
+    </div>
+<?php } ?>

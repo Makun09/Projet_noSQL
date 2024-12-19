@@ -19,12 +19,12 @@
                     <a class="nav-link active" href="/home/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Browse</a>
+                    <a class="nav-link" href="/browse/">Browse</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Playlists</a>
                 </li>
-                
+
             </ul>
 
             <!-- Login/Register buttons -->
