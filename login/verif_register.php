@@ -66,12 +66,16 @@ $password = $_POST['password'];
 $salt = 'Chui un mec cool';
 $password_hash = hash('sha256', $password . $salt);
 
+$is_artist = isset($_POST['is_artist']) ? true : false;
+
+
 // Insert user into database
 
 $result = $collection->insertOne([
     'username' => $username,
     'email' => $email,
-    'password' => $password_hash
+    'password' => $password_hash,
+    'is_artist' => $is_artist
 ]);
 
 

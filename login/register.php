@@ -43,6 +43,13 @@ if (isset($_SESSION['user'])) {
                                 <label for="confirm_password">Confirm Password</label>
                                 <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
                             </div>
+
+                            <!-- Checkbox pour vérifier si l'utilisateur est un artiste -->
+                            <div class="form-group form-check mt-2">
+                                <input type="checkbox" class="form-check-input" id="is_artist" name="is_artist">
+                                <label class="form-check-label" for="is_artist">I am an artist</label>
+                            </div>
+
                             <button type="submit" class="btn btn-primary btn-block mt-3">Register</button>
                         </form>
                     </div>
@@ -52,4 +59,3 @@ if (isset($_SESSION['user'])) {
     </div>
 </body>
 
-</html>
