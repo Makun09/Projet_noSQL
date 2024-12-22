@@ -34,12 +34,42 @@ function validateMandatoryParams(array $data, array $mandatoryParams): bool {
 
 //////////////////////// GET ////////////////////////
 
+// USERS \\
+
+function getUsers() {
+    $db = getDatabaseConnection();
+    $collection = $db->spotify->users;
+    $res = $collection->find([]);
+
+    // return json_encode($res->toArray(), JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    return $res->toArray();
+}
+
+function getUserById(string $user_id) {
+    $db = getDatabaseConnection();
+    $collection = $db->spotify->users;
+    $res = $collection->findOne(['_id' => new MongoDB\BSON\ObjectId($user_id)]);
+
+    // return json_encode($res, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    return $res;
+}
+
+function getUserByUsername(string $username) {
+    $db = getDatabaseConnection();
+    $collection = $db->spotify->users;
+    $res = $collection->findOne(['username' => $username]);
+
+    // return json_encode($res, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    return $res;
+}
+
+
 // SONGS \\
 
 function getSongs() {
     $db = getDatabaseConnection();
-    $songs = $db->spotify->songs;
-    $res = $songs->find([]);
+    $collection = $db->spotify->songs;
+    $res = $collection->find([]);
 
     // return json_encode($res->toArray(), JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
     return $res->toArray();
@@ -47,8 +77,8 @@ function getSongs() {
 
 function getSongsByString(string $search) {
     $db = getDatabaseConnection();
-    $songs = $db->spotify->songs;
-    $res = $songs->find([
+    $collection = $db->spotify->songs;
+    $res = $collection->find([
         'title' => ['$regex' => $search, '$options' => 'i']
     ]);
 
@@ -56,12 +86,13 @@ function getSongsByString(string $search) {
     return $res->toArray();
 }
 
-function getSongById(string $id) {
+function getSongById(string $song_id) {
     $db = getDatabaseConnection();
-    $songs = $db->spotify->songs;
-    $res = $songs->findOne(['_id' => $id]);
+    $collection = $db->spotify->songs;
+    $res = $collection->findOne(['_id' => new MongoDB\BSON\ObjectId($song_id)]);
 
-    return json_encode($res, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    // return json_encode($res, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    return $res;
 }
 
 // PLAYLISTS \\
@@ -71,53 +102,61 @@ function getPlaylists() {
     $playlists = $db->spotify->playlists;
     $res = $playlists->find([]);
 
-    return json_encode($res->toArray(), JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    // return json_encode($res->toArray(), JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    return $res->toArray();
 }
 
 function getPlaylistsByString(string $search) {
     $db = getDatabaseConnection();
-    $playlists = $db->spotify->playlists;
-    $res = $playlists->find([
+    $collection = $db->spotify->playlists;
+    $res = $collection->find([
         'name' => ['$regex' => $search, '$options' => 'i']
     ]);
 
-    return json_encode($res->toArray(), JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    // return json_encode($res->toArray(), JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    return $res->toArray();
 }
 
-function getPlaylistById(string $id) {
+function getPlaylistById(string $playlist_id) {
     $db = getDatabaseConnection();
-    $playlists = $db->spotify->playlists;
-    $res = $playlists->findOne(['_id' => $id]);
+    $collection = $db->spotify->playlists;
+    $res = $collection->findOne(['_id' => new MongoDB\BSON\ObjectId($playlist_id)]);
 
-    return json_encode($res, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+
+    // return json_encode($res, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    return $res;
 }
 
 // ARTISTS \\
 
 function getArtists() {
     $db = getDatabaseConnection();
-    $artists = $db->spotify->artists;
-    $res = $artists->find([]);
+    $collection = $db->spotify->artists;
+    $res = $collection->find([]);
 
-    return json_encode($res->toArray(), JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    // return json_encode($res->toArray(), JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    return $res->toArray();
 }
 
 function getArtistsByString(string $search) {
     $db = getDatabaseConnection();
-    $artists = $db->spotify->artists;
-    $res = $artists->find([
+    $collection = $db->spotify->artists;
+    $res = $collection->find([
         'name' => ['$regex' => $search, '$options' => 'i']
     ]);
 
-    return json_encode($res->toArray(), JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    // return json_encode($res->toArray(), JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    return $res->toArray();
 }
 
-function getArtistById(string $id) {
+function getArtistById($artist_id) {
     $db = getDatabaseConnection();
-    $artists = $db->spotify->artists;
-    $res = $artists->findOne(['_id' => $id]);
+    $collection = $db->spotify->artists;
+    $res = $collection->findOne(['_id' => new MongoDB\BSON\ObjectId($artist_id)]);
 
-    return json_encode($res, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+
+    // return json_encode($res, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    return $res;
 }
 
 //////////////////////// DISPLAY ////////////////////////
