@@ -2,16 +2,37 @@
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/utils/server.php';
 
+function checkImage($url) {
+    $headers = @get_headers($url);
+    if($headers && strpos($headers[0], '200')) {
+        return $url;
+    } else {
+        return '/img/static/default-song.png';
+    }
+}
+
+
+
+
+
 // Fonction pour afficher une musique
 function displaySong($song)
 { ?>
+
+    <?php
+    if (checkImage($song['album_art']) == '/img/static/default-song.png')
+        $album_art = '/img/static/default-song.png';
+    else
+        $album_art = '/uploads/music/' . $song['album_art'];
+    ?>
+
     <div class="position-relative flex-shrink-0 mb-3" style="width: 11rem; min-width: 11rem;"
         onmouseover="this.querySelector('.card').classList.add('bg-body-tertiary');
                      this.querySelector('button').style.opacity='1';"
         onmouseout="this.querySelector('.card').classList.remove('bg-body-tertiary');
                     this.querySelector('button').style.opacity='0';">
         <a class="card text-start text-decoration-none p-2" href="" style="border: none; transition: background-color 0.3s ease;">
-            <img src="https://picsum.photos/256" class="card-img-top rounded" alt="Album Art">
+            <img id="<?= $song['album_art'] ?>" src="<?= $album_art ?>" class="card-img-top rounded" alt="Album Art">
             <div class="card-body pt-1">
                 <h5 class="card-title" style="font-weight: bold;"><?php echo isset($song['title']) ? $song['title'] : 'Sans titre'; ?></h5>
                 <p class="card-text text-muted"><?php
@@ -35,7 +56,7 @@ function displaySongWithPlayButton($song)
     <div class="position-relative flex-shrink-0 mb-3" style="width: 11rem; min-width: 11rem;">
         <div class="card text-start text-decoration-none p-2" href="" style="border: none; transition: background-color 0.3s ease;">
             <div class="position-relative">
-                <img src="https://picsum.photos/256" class="card-img-top rounded" alt="Album Art" id="img-<?php echo $song['_id']; ?>">
+            <img id="img-<?= $song['_id'] ?>" src="<?= empty($song['album_art']) ? '/img/static/default-song.png' : '/uploads/music/' . $song['album_art'] ?>" class="card-img-top rounded" alt="Album Art">
                 <button class="btn btn-success btn-sm position-absolute bottom-0 end-0 m-2 rounded-circle" onclick="player.playSong(
                     '/uploads/music/<?php echo $song['filename']; ?>',
                     '<?php echo $song['title']; ?>',
