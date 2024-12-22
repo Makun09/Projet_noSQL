@@ -21,11 +21,10 @@ $is_artist = !empty($_SESSION['is_artist']) ? $_SESSION['is_artist'] : false;
 // Connexion à la base de données pour récupérer les musiques de l'utilisateur
 require_once $_SERVER['DOCUMENT_ROOT'] . '/utils/database.php';
 $db = getDatabaseConnection();
-$music_collection = $db->spotify->music;
+$music_collection = $db->spotify->songs;
 
 // Récupérer les musiques de l'utilisateur
-$user_id = $_SESSION['user_id'];
-$musics = $music_collection->find(['user_id' => new MongoDB\BSON\ObjectId($user_id)]);
+$musics = $music_collection->find(['artist' => $_SESSION['artist_id']]);
 
 // Si l'utilisateur est un artiste, ajouter le bouton pour ajouter une musique
 ?>
@@ -60,10 +59,9 @@ $musics = $music_collection->find(['user_id' => new MongoDB\BSON\ObjectId($user_
                 <div class="list-group">
                     <?php foreach ($musics as $music):?>
                         <div class="list-group-item">
-                            <h5 class="mb-2"><?php echo htmlspecialchars($music['music_title']); ?></h5>
-                            <p><strong>Catégorie:</strong> <?php echo htmlspecialchars($music['category']); ?></p>
+                            <h5 class="mb-2"><?php echo htmlspecialchars($music['title']); ?></h5>
                             <audio controls>
-                                <source src="<?php echo htmlspecialchars($music['audio_file']); ?>" type="audio/mpeg">
+                                <source src="/uploads/music/<?= htmlspecialchars($music['filename']); ?>" type="audio/mpeg">
                                 Votre navigateur ne prend pas en charge l'élément audio.
                             </audio>
                         </div>
