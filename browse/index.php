@@ -33,7 +33,7 @@ $artists = getArtistsByString($search);
 
         <?php
         foreach ($songs as $song) {
-            displaySong($song);
+            displaySongWithPlayButton($song);
         }
 
         ?>

@@ -31,14 +31,13 @@ $musics = $music_collection->find(['artist' => $_SESSION['artist_id']]);
 // Si l'utilisateur est un artiste, ajouter le bouton pour ajouter une musique
 ?>
 
-<body>
 <div class="container mt-5">
     <div class="card mx-auto shadow-lg" style="max-width: 500px;">
         <div class="text-center p-4">
             <img src="<?php echo htmlspecialchars($profile_picture); ?>"
-                 class="rounded-circle border img-fluid"
-                 alt="Photo de profil"
-                 style="width: 150px; height: 150px; object-fit: cover;">
+                class="rounded-circle border img-fluid"
+                alt="Photo de profil"
+                style="width: 150px; height: 150px; object-fit: cover;">
         </div>
         <div class="card-body">
             <h5 class="card-title text-center mb-4"><?php echo htmlspecialchars($_SESSION['username']); ?></h5>
@@ -53,34 +52,29 @@ $musics = $music_collection->find(['artist' => $_SESSION['artist_id']]);
 
     <!-- Afficher les musiques de l'utilisateur -->
     <?php if ($is_artist): ?>
+        <h4 class="text-center mt-5">Mes Musiques</h4>
         <div class="mt-5">
-            <h4 class="text-center">Mes Musiques</h4>
             <?php if ($musics->isDead()): ?>
                 <p class="text-center">Vous n'avez pas encore ajouté de musique.</p>
             <?php else: ?>
-                <div class="list-group">
-                    <?php foreach ($musics as $music):?>
-                        <div class="container">
-                            <?php displaySongWithPlayButton($music); ?>
-                    </div>
+                <div class="d-flex  gap-3">
+                    <?php foreach ($musics as $music): ?>
+                        <?php displaySongWithPlayButton($music); ?>
                     <?php endforeach; ?>
                 </div>
-            <?php endif; ?>
         </div>
     <?php endif; ?>
-
-    <!-- Bouton Modifier le profil -->
-    <div class="text-center mt-5">
-        <a href="modif_profile.php" class="btn btn-lg" style="background-color: #6f42c1; color: white; border-color: #6f42c1;">Modifier le profil</a>
-    </div>
-
-    <!-- Bouton Ajouter une musique -->
-    <?php if ($is_artist): ?>
-        <div class="text-center mt-4">
-            <a href="add_music.php" class="btn btn-lg" style="background-color: #6f42c1; color: white; border-color: #6f42c1;">Ajouter une musique</a>
-        </div>
-    <?php endif; ?>
-
 </div>
-</body>
-</html>
+<?php endif; ?>
+
+<!-- Bouton Modifier le profil -->
+<div class="text-center mt-5">
+    <a href="modif_profile.php" class="btn btn-lg" style="background-color: #6f42c1; color: white; border-color: #6f42c1;">Modifier le profil</a>
+</div>
+
+<!-- Bouton Ajouter une musique -->
+<?php if ($is_artist): ?>
+    <div class="text-center mt-4">
+        <a href="add_music.php" class="btn btn-lg" style="background-color: #6f42c1; color: white; border-color: #6f42c1;">Ajouter une musique</a>
+    </div>
+<?php endif; ?>

@@ -19,7 +19,7 @@ function displaySong($song)
         </a>
         <button class="btn btn-primary btn-sm position-absolute rounded-circle"
             style="opacity: 0; right: 10px; top: 10px; transition: opacity 0.6s ease;"
-            onclick="addToPlaylist(<?php echo $song['_id']; ?>)">
+            onclick="player.playSong('/uploads/music/<?= $song['filename'] ?>','<?= $song['title']; ?>','<?= getArtistById($song['artist'])['name']; ?>',document.getElementById('<?php echo $song['album_art']; ?>').src)">
             <i class="bi bi-plus-lg"></i>
         </button>
     </div>
@@ -30,21 +30,23 @@ function displaySong($song)
 function displaySongWithPlayButton($song)
 { ?>
     <div class="position-relative flex-shrink-0 mb-3" style="width: 11rem; min-width: 11rem;">
-        <a class="card text-start text-decoration-none p-2" href="" style="border: none; transition: background-color 0.3s ease;">
-            <img src="https://picsum.photos/256" class="card-img-top rounded" alt="Album Art" id="img-<?php echo $song['_id']; ?>">
+        <div class="card text-start text-decoration-none p-2" href="" style="border: none; transition: background-color 0.3s ease;">
+            <div class="position-relative">
+                <img src="https://picsum.photos/256" class="card-img-top rounded" alt="Album Art" id="img-<?php echo $song['_id']; ?>">
+                <button class="btn btn-success btn-sm position-absolute bottom-0 end-0 m-2 rounded-circle" onclick="player.playSong(
+                    '/uploads/music/<?php echo $song['filename']; ?>',
+                    '<?php echo $song['title']; ?>',
+                    '<?php echo getArtistById($song['artist'])['name']; ?>',
+                    document.getElementById('img-<?php echo $song['_id']; ?>').src
+                )">
+                    <i class="bi bi-play-fill"></i>
+                </button>
+            </div>
             <div class="card-body pt-1">
                 <h5 class="card-title" style="font-weight: bold;"><?php echo $song['title']; ?></h5>
                 <p class="card-text text-muted"><?php echo getArtistById($song['artist'])['name']; ?></p>
             </div>
-        </a>
-        <button class="btn btn-success btn-sm" onclick="player.playSong(
-            '/uploads/music/<?php echo $song['filename']; ?>',
-            '<?php echo $song['title']; ?>',
-            '<?php echo getArtistById($song['artist'])['name']; ?>',
-            document.getElementById('img-<?php echo $song['_id']; ?>').src
-        )">
-            Lire
-        </button>
+        </div>
     </div>
 <?php }
 

@@ -9,6 +9,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" defer></script>
 </head>
-<body>
+<body style="margin-bottom: 10rem;">
 
 <?php session_start();?>

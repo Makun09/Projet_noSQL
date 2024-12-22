@@ -17,8 +17,8 @@
             <div class="col-6 text-center">
                 <audio id="global-audio-player"></audio>
                 <div class="mb-2">
-                    <button class="btn btn-link text-white" onclick="togglePlayPause()" id="playPauseBtn">
-                        <i class="fas fa-play"></i>
+                    <button class="btn btn-link text-white" onclick="player.togglePlayPause()" id="playPauseBtn">
+                        <i class="bi bi-play"></i>
                     </button>
                 </div>
                 <div class="d-flex align-items-center gap-2">
@@ -58,7 +58,7 @@ const player = {
     playSong(src, title, artist, imgSrc) {
         this.audio.src = src;
         this.audio.play();
-        this.playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        this.playPauseBtn.innerHTML = '<i class="bi bi-pause"></i>';
         this.currentSongTitle.textContent = title;
         this.currentSongArtist.textContent = artist;
         this.currentSongImg.src = imgSrc;
@@ -67,10 +67,10 @@ const player = {
     togglePlayPause() {
         if (this.audio.paused) {
             this.audio.play();
-            this.playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            this.playPauseBtn.innerHTML = '<i class="bi bi-pause"></i>';
         } else {
             this.audio.pause();
-            this.playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            this.playPauseBtn.innerHTML = '<i class="bi bi-play"></i>';
         }
     },
 
