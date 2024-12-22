@@ -3,6 +3,8 @@ $title = "Profile";
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/include/head.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/include/header.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/include/player.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/utils/cards.php';
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: ../home');
@@ -58,13 +60,9 @@ $musics = $music_collection->find(['artist' => $_SESSION['artist_id']]);
             <?php else: ?>
                 <div class="list-group">
                     <?php foreach ($musics as $music):?>
-                        <div class="list-group-item">
-                            <h5 class="mb-2"><?php echo htmlspecialchars($music['title']); ?></h5>
-                            <audio controls>
-                                <source src="/uploads/music/<?= htmlspecialchars($music['filename']); ?>" type="audio/mpeg">
-                                Votre navigateur ne prend pas en charge l'élément audio.
-                            </audio>
-                        </div>
+                        <div class="container">
+                            <?php displaySongWithPlayButton($music); ?>
+                    </div>
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>

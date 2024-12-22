@@ -26,6 +26,28 @@ function displaySong($song)
 
 <?php }
 
+// Fonction pour afficher une musique avec un bouton de lecture
+function displaySongWithPlayButton($song)
+{ ?>
+    <div class="position-relative flex-shrink-0 mb-3" style="width: 11rem; min-width: 11rem;">
+        <a class="card text-start text-decoration-none p-2" href="" style="border: none; transition: background-color 0.3s ease;">
+            <img src="https://picsum.photos/256" class="card-img-top rounded" alt="Album Art" id="img-<?php echo $song['_id']; ?>">
+            <div class="card-body pt-1">
+                <h5 class="card-title" style="font-weight: bold;"><?php echo $song['title']; ?></h5>
+                <p class="card-text text-muted"><?php echo getArtistById($song['artist'])['name']; ?></p>
+            </div>
+        </a>
+        <button class="btn btn-success btn-sm" onclick="player.playSong(
+            '/uploads/music/<?php echo $song['filename']; ?>',
+            '<?php echo $song['title']; ?>',
+            '<?php echo getArtistById($song['artist'])['name']; ?>',
+            document.getElementById('img-<?php echo $song['_id']; ?>').src
+        )">
+            Lire
+        </button>
+    </div>
+<?php }
+
 // Fonction pour afficher une playlist
 function displayPlaylist($playlist)
 { ?>

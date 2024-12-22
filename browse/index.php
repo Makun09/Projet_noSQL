@@ -2,6 +2,7 @@
 $title = 'Browse';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/include/head.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/include/header.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/include/player.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/utils/database.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/utils/cards.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/utils/server.php';
