@@ -152,7 +152,7 @@ function getArtistsByString(string $search) {
 function getArtistById($artist_id) {
     $db = getDatabaseConnection();
     $collection = $db->spotify->artists;
-    $res = $collection->findOne(['_id' => new MongoDB\BSON\ObjectId($artist_id)]);
+    $res = $collection->findOne(['_id' => $artist_id]);
 
 
     // return json_encode($res, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);

@@ -7,7 +7,7 @@ $referer = strtok($_SERVER['HTTP_REFERER'], '?');
 
 // var_dump($_POST);
 // die();
-if (!validateMandatoryParams($_POST, ['username', 'email', 'password', 'confirm_password'])) {
+if (!validateMandatoryParams($_POST, ['username', 'email', 'password', 'confirm_password', 'is_artist'])) {
     returnError("Missing required fields", $referer, 400);
 }
 
@@ -28,6 +28,7 @@ if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
 
 
 // Password validation
+/*
 if (strlen($_POST['password']) < 8) {
     returnError("Password must be at least 8 characters long", $referer, 400);
 }
@@ -42,6 +43,8 @@ if (!preg_match('/[0-9]/', $_POST['password'])) {
 if ($_POST['password'] !== $_POST['confirm_password']) {
     returnError("Passwords do not match", $referer, 400);
 }
+*/
+
 
 // Check if username is already taken
 $username = $_POST['username'];
@@ -68,6 +71,16 @@ $password_hash = hash('sha256', $password . $salt);
 
 $is_artist = isset($_POST['is_artist']) ? true : false;
 
+// Si l'utilisateur est un artiste, l'ajouter à la collection des artistes
+
+if ($is_artist) {
+    $artists_collection = $db->spotify->artists;
+    $artists_collection->insertOne([
+        'name' => $username,
+        'image' => ''
+    ]);
+}
+
 
 // Insert user into database
 
@@ -75,7 +88,8 @@ $result = $collection->insertOne([
     'username' => $username,
     'email' => $email,
     'password' => $password_hash,
-    'is_artist' => $is_artist
+    'is_artist' => $is_artist,
+    'artist_id' => $is_artist ? $artists_collection->findOne(['name' => $username])->_id : null
 ]);
 
 

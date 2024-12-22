@@ -15,13 +15,13 @@ $songs_collection = $db->spotify->songs;
 
 // Vérification du formulaire
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $music_title = htmlspecialchars(trim($_POST['music_title']));
-    $category = htmlspecialchars(trim($_POST['category']));
+    $title = htmlspecialchars(trim($_POST['music_title']));
     $audio_file = $_FILES['audio_file'];
+    $album_art_file = $_FILES['album_art'];
 
     // Validation des données
-    if (empty($music_title) || empty($category) || !$audio_file || $audio_file['error'] !== UPLOAD_ERR_OK) {
-        header('Location: add_music.php?error=Tous les champs sont requis et le fichier audio doit être valide');
+    if (empty($title) || !$audio_file || $audio_file['error'] !== UPLOAD_ERR_OK || !$album_art_file || $album_art_file['error'] !== UPLOAD_ERR_OK) {
+        header('Location: add_music.php?error=Tous les champs sont requis et les fichiers audio et image doivent être valides');
         exit();
     }
 
@@ -30,21 +30,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $audio_filename = uniqid('music_') . '.' . pathinfo($audio_file['name'], PATHINFO_EXTENSION);
     $upload_file = $upload_dir . $audio_filename;
 
-    if (move_uploaded_file($audio_file['tmp_name'], $upload_file)) {
+    // Déplacer le fichier de l'image de l'album vers le dossier de téléchargement
+    $album_art_filename = uniqid('album_art_') . '.' . pathinfo($album_art_file['name'], PATHINFO_EXTENSION);
+    $upload_album_art_file = $upload_dir . $album_art_filename;
+
+    if (move_uploaded_file($audio_file['tmp_name'], $upload_file) && move_uploaded_file($album_art_file['tmp_name'], $upload_album_art_file)) {
         // Insertion dans la base de données
         $songs_collection->insertOne([
-            'user_id' => new MongoDB\BSON\ObjectId($_SESSION['user_id']),
-            'music_title' => $music_title,
-            'category' => $category,
-            'audio_file' => '/uploads/music/' . $audio_filename,
-            'artist_name' => $_SESSION['username'], // Le nom de l'artiste est celui de l'utilisateur
+            'artist' => $_SESSION['artist_id'],
+            'title' => $title,
+            'filename' => $audio_filename,
+            'album_art' => $album_art_filename,
         ]);
 
         // Redirection vers le profil
         header('Location: profile.php');
         exit();
     } else {
-        header('Location: add_music.php?error=Erreur lors du téléchargement du fichier audio');
+        header('Location: add_music.php?error=Erreur lors du téléchargement des fichiers');
         exit();
     }
 }
