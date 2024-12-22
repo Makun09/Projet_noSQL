@@ -28,6 +28,7 @@ $music_collection = $db->spotify->songs;
 // Récupérer les musiques de l'utilisateur
 $musics = $music_collection->find(['artist' => $_SESSION['artist_id']]);
 
+
 // Si l'utilisateur est un artiste, ajouter le bouton pour ajouter une musique
 ?>
 
