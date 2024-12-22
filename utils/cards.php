@@ -13,8 +13,11 @@ function displaySong($song)
         <a class="card text-start text-decoration-none p-2" href="" style="border: none; transition: background-color 0.3s ease;">
             <img src="https://picsum.photos/256" class="card-img-top rounded" alt="Album Art">
             <div class="card-body pt-1">
-                <h5 class="card-title" style="font-weight: bold;"><?php echo $song['title']; ?></h5>
-                <p class="card-text text-muted"><?php echo getArtistById($song['artist'])['name']; ?></p>
+                <h5 class="card-title" style="font-weight: bold;"><?php echo isset($song['title']) ? $song['title'] : 'Sans titre'; ?></h5>
+                <p class="card-text text-muted"><?php
+                    $artist = isset($song['artist']) ? getArtistById($song['artist']) : null;
+                    echo isset($artist['name']) ? $artist['name'] : 'Artiste inconnu';
+                ?></p>
             </div>
         </a>
         <button class="btn btn-primary btn-sm position-absolute rounded-circle"
@@ -43,8 +46,11 @@ function displaySongWithPlayButton($song)
                 </button>
             </div>
             <div class="card-body pt-1">
-                <h5 class="card-title" style="font-weight: bold;"><?php echo $song['title']; ?></h5>
-                <p class="card-text text-muted"><?php echo getArtistById($song['artist'])['name']; ?></p>
+                <h5 class="card-title" style="font-weight: bold;"><?php echo isset($song['title']) ? $song['title'] : 'Sans titre'; ?></h5>
+                <p class="card-text text-muted"><?php
+                    $artist = isset($song['artist']) ? getArtistById($song['artist']) : null;
+                    echo isset($artist['name']) ? $artist['name'] : 'Artiste inconnu';
+                ?></p>
             </div>
         </div>
     </div>
@@ -61,8 +67,8 @@ function displayPlaylist($playlist)
                         this.nextElementSibling.style.opacity='0';">
             <img src="https://picsum.photos/256" class="card-img-top rounded" alt="Album Art">
             <div class="card-body pt-1">
-                <h5 class="card-title" style="font-weight: bold;"><?= $playlist['name'] ?></h5>
-                <p class="card-text text-muted"><?php echo getUserById($playlist['user_id'])['username'] ?></p>
+                <h5 class="card-title" style="font-weight: bold;"><?= isset($playlist['name']) ? $playlist['name'] : 'Playlist sans nom' ?></h5>
+                <p class="card-text text-muted"><?php echo isset($playlist['user_id']) ? getUserById($playlist['user_id'])['username'] : 'Utilisateur inconnu' ?></p>
             </div>
         </a>
     </div>
@@ -81,7 +87,7 @@ function displayArtist($artist)
                         this.nextElementSibling.style.opacity='0';">
             <img src="https://picsum.photos/256" class="card-img-top rounded-circle" alt="Album Art">
             <div class="card-body pt-3">
-                <h5 class="card-title" style="font-weight: bold;"><?php echo getArtistById($artist['_id'])['name']; ?></h5>
+                <h5 class="card-title" style="font-weight: bold;"><?php echo isset($artist['_id']) ? getArtistById($artist['_id'])['name'] : 'Artiste inconnu'; ?></h5>
             </div>
         </a>
     </div>
