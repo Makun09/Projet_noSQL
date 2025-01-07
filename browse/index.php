@@ -2,6 +2,7 @@
 $title = 'Browse';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/include/head.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/include/header.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/include/player.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/utils/database.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/utils/cards.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/utils/server.php';
@@ -14,12 +15,6 @@ $songs = getSongsByString($search);
 $playlists = getPlaylistsByString($search);
 $artists = getArtistsByString($search);
 
-
-?>
-<?php
-// foreach ($songs as $song) {
-//     displaySong($song);
-// }
 ?>
 
 
@@ -38,7 +33,7 @@ $artists = getArtistsByString($search);
 
         <?php
         foreach ($songs as $song) {
-            displaySong($song);
+            displaySongWithPlayButton($song);
         }
 
         ?>
@@ -69,8 +64,11 @@ $artists = getArtistsByString($search);
     <div class="d-flex flex-row flex-nowrap mt-3 gap-3 overflow-x-scroll">
 
 
-
-
+        <?php
+            foreach ($playlists as $playlist) {
+                displayPlaylist($playlist);
+            }
+        ?>
 
 
 
@@ -94,7 +92,11 @@ $artists = getArtistsByString($search);
     <h2 class="mt-4">Artistes</h2>
     <div class="d-flex flex-row flex-nowrap mt-3 gap-3 overflow-x-scroll">
 
-
+        <?php
+            foreach ($artists as $artist) {
+                displayArtist($artist);
+            }
+        ?>
 
 
 

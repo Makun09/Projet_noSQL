@@ -36,6 +36,9 @@ if ($user) {
     $_SESSION['user_id'] = (string)$user->_id;
     $_SESSION['username'] = $user->username;
     $_SESSION['email'] = $user->email;
+    $_SESSION['is_artist']=$user->is_artist ?? false;
+    $_SESSION['artist_id'] = $user->artist_id ?? null;
+
 
     // Redirect to home page or dashboard
     header('location: /index.php');

@@ -22,7 +22,7 @@
                     <a class="nav-link" href="/browse/">Browse</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Playlists</a>
+                    <a class="nav-link" href="/playlist/">Playlists</a>
                 </li>
 
             </ul>

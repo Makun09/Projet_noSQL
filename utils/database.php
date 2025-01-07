@@ -18,13 +18,17 @@ users
     email
     password
     profile_picture
+    bio
+    liked_songs []
+    is_artist
+    is_admin
 ----------------
 playlists
     _id
     user_id
     image
     name
-    ???
+    songs []
 ----------------
 songs
     _id
@@ -32,14 +36,14 @@ songs
     title
     artist
     filename
-    album
+    album_id
     album_art
     duration
 ----------------
 albums
     _id
     title
-    artist
+    artist_id
     year
     album_art
 ----------------
@@ -48,8 +52,8 @@ artists
     name
     image
     bio
-    ???
 liked
     _id
-    song_id
+    user_id
+    songs []
 */
