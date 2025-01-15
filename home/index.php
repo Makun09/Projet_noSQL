@@ -28,7 +28,7 @@ $artists = getArtistsByString($search);
         .card {
             width: 15rem; /* Ajustez la largeur de la carte selon vos besoins */
             height: auto; /* Ajustez la hauteur de la carte selon vos besoins */
-         
+
         }
         .custom-card-spacing > .col {
             margin-bottom: 8px; /* Ajustez selon votre préférence */
@@ -58,63 +58,50 @@ $artists = getArtistsByString($search);
 
 <body>
     <div class="container mt-4">
-        <!-- Formulaire de recherche supprimé -->
-
         <!-- Grande carte en forme de bannière -->
-        <div class="d-flex justify-content-center mb-4">
-            <div class="card banner-card">
-                <img src="/img/banner/img1.png" alt="Banner Image">
+        <div class="row justify-content-center mb-4">
+            <div class="col-auto">
+                <div class="card banner-card">
+                    <img src="/img/banner/img1.png" alt="Banner Image">
+                </div>
             </div>
         </div>
 
-        <h2>Musiques</h2>
-        <div class="d-flex justify-content-center padding-right">
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-6 custom-card-spacing">
-                <?php
-                foreach ($songs as $song) {
-                    echo '<div class="col">';
-                    displaySongWithPlayButton($song);
-                    echo '</div>';
-                }
-                ?>
+        <h2 class="text-center">Musiques</h2>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
+            <?php foreach ($songs as $song): ?>
+                <div class="col">
+                    <?php displaySongWithPlayButton($song); ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <div class="row justify-content-center mb-4 mt-4">
+            <div class="col-auto">
+                <div class="card banner-card">
+                    <img src="/img/banner/img2.png" alt="Banner Image">
+                </div>
             </div>
         </div>
 
-        <div class="d-flex justify-content-center mb-4">
-            <div class="card banner-card">
-                <img src="/img/banner/img2.png" alt="Banner Image">
-            </div>
+        <h2 class="text-center">Playlists</h2>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
+            <?php foreach ($playlists as $playlist): ?>
+                <div class="col">
+                    <?php displayPlaylist($playlist); ?>
+                </div>
+            <?php endforeach; ?>
         </div>
 
-        <h2 class="mt-4">Playlists</h2>
-        <div class="d-flex justify-content-center">
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-6 custom-card-spacing">
-                <?php
-                foreach ($playlists as $playlist) {
-                    echo '<div class="col">';
-                    displayPlaylist($playlist);
-                    echo '</div>';
-                }
-                ?>
-            </div>
-        </div>
-
-        <h2 class="mt-4">Artistes</h2>
-        <div class="d-flex justify-content-center">
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-6 custom-card-spacing">
-                <?php
-                foreach ($artists as $artist) {
-                    echo '<div class="col">';
-                    displayArtist($artist);
-                    echo '</div>';
-                }
-                ?>
-            </div>
+        <h2 class="text-center mt-4">Artistes</h2>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
+            <?php foreach ($artists as $artist): ?>
+                <div class="col">
+                    <?php displayArtist($artist); ?>
+                </div>
+            <?php endforeach; ?>
         </div>
     </div>
 
-    <script>
-
-    </script>
 </body>
 </html>
