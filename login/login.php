@@ -1,6 +1,5 @@
 <?php
 $title = 'Login';
-session_start();
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/include/head.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/include/header.php';
@@ -16,7 +15,7 @@ if (isset($_SESSION['user'])) {
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <?php if (isset($_GET['error'])): ?>
+                <?php if (isset($_GET['error'])): ?>+
                     <div class="alert alert-danger mt-5" role="alert">
                         <?php echo htmlspecialchars($_GET['error']); ?>
                     </div>
